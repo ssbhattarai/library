@@ -10,14 +10,25 @@ class BooksController extends Controller
 {
     public function store(BookRequest $request)
     {
-        Book::create([
+        $book = Book::create([
             'title' => request('title'),
             'author' => \request('author')
         ]);
+
+        return redirect($book->path());
     }
 
     public function update(Book $book, BookRequest $request)
     {
         $book->update($request->only(['title', 'author']));
+
+        return redirect($book->path());
+    }
+
+    public function destroy(Book $book)
+    {
+        $book->delete();
+
+        return redirect('books');
     }
 }
